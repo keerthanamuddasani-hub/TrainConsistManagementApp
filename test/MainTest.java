@@ -127,4 +127,39 @@ class MainTest {
         // Now it will be FALSE ✅
         assertFalse(isSafe);
     }
+    @Test
+    void testUC13_PerformanceComparison() {
+
+        // Create large dataset
+        List<Bogie> bogies = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            bogies.add(new Bogie("Sleeper", 72));
+        }
+
+        // 🔹 Loop timing
+        long startLoop = System.nanoTime();
+
+        int totalLoop = 0;
+        for (Bogie b : bogies) {
+            totalLoop += b.capacity;
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // 🔹 Stream timing
+        long startStream = System.nanoTime();
+
+        int totalStream = bogies.stream()
+                .mapToInt(b -> b.capacity)
+                .sum();
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // ✅ Assertions (important)
+        assertEquals(totalLoop, totalStream);  // both should give same result
+        assertTrue(loopTime > 0);
+        assertTrue(streamTime > 0);
+    }
 }
