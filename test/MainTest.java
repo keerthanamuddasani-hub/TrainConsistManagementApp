@@ -14,9 +14,16 @@ class MainTest {
             this.name = name;
             this.capacity = capacity;
         }
-
     }
+    static class GoodsBogie {
+        String type;
+        String cargo;
 
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+    }
     @Test
     void testFilterBogies() {
 
@@ -99,5 +106,25 @@ class MainTest {
         // Assertions
         assertTrue(isTrainValid);
         assertTrue(isCargoValid);
+    }
+    @Test
+    void testUC12_SafetyCompliance() {
+
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
+        goodsBogies.add(new GoodsBogie("Open", "Coal"));             // valid
+        goodsBogies.add(new GoodsBogie("Box", "Grain"));             // valid
+
+        // ❌ INVALID CASE (Petroleum NOT in Cylindrical)
+        goodsBogies.add(new GoodsBogie("Open", "Petroleum"));
+
+        boolean isSafe = goodsBogies.stream()
+                .allMatch(b ->
+                        !b.cargo.equals("Petroleum") || b.type.equals("Cylindrical")
+                );
+
+        // Now it will be FALSE ✅
+        assertFalse(isSafe);
     }
 }
