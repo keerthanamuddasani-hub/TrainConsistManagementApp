@@ -9,6 +9,7 @@ class Bogie {
     public Bogie(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
+
     }
 
     @Override

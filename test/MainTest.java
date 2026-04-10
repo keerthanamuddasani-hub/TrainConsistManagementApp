@@ -14,6 +14,7 @@ class MainTest {
             this.name = name;
             this.capacity = capacity;
         }
+
     }
 
     @Test
@@ -61,5 +62,23 @@ class MainTest {
 
         // First Class should have 1
         assertEquals(1, grouped.get("First Class").size());
+    }
+    @Test
+    void testUC10_TotalSeats() {
+
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 70));
+
+        // Step 1: Map capacities
+        // Step 2: Reduce to total sum
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+
+        // Expected total = 72 + 56 + 24 + 70 = 222
+        assertEquals(222, totalSeats);
     }
 }
