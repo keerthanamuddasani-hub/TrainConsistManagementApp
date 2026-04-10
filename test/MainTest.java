@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,5 +33,33 @@ class MainTest {
         assertEquals(2, filtered.size());
         assertEquals("Sleeper", filtered.get(0).name);
         assertEquals("General", filtered.get(1).name);
+    }
+
+    @Test
+    void testUC9_GroupBogies() {
+
+        // Step 1: Create list
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 70));
+        bogies.add(new Bogie("AC Chair", 68));
+
+        // Step 2: Group using Streams
+        Map<String, List<Bogie>> grouped =
+                bogies.stream()
+                        .collect(Collectors.groupingBy(b -> b.name));
+
+        // Step 3: Check results (Assertions)
+
+        // Sleeper should have 2
+        assertEquals(2, grouped.get("Sleeper").size());
+
+        // AC Chair should have 2
+        assertEquals(2, grouped.get("AC Chair").size());
+
+        // First Class should have 1
+        assertEquals(1, grouped.get("First Class").size());
     }
 }
