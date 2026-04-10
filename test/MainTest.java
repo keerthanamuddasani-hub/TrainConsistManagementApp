@@ -81,4 +81,23 @@ class MainTest {
         // Expected total = 72 + 56 + 24 + 70 = 222
         assertEquals(222, totalSeats);
     }
+    @Test
+    void testUC11_ValidateTrainAndCargo() {
+
+        // Sample inputs
+        String trainId = "TRN-6524";
+        String cargoCode = "PET-FH";
+
+        // Regex patterns
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
+
+        // Validation
+        boolean isTrainValid = trainId.matches(trainPattern);
+        boolean isCargoValid = cargoCode.matches(cargoPattern);
+
+        // Assertions
+        assertTrue(isTrainValid);
+        assertTrue(isCargoValid);
+    }
 }
